@@ -55,25 +55,23 @@ const requestProcess = (bodyRequest) => {
   const moveCharacterOptions = (arenaX, arenaY, player) => {
     if (
       (player.x == arenaX && player.y == 0 && player.direction !== "S") ||
-      (player.x == arenaX &&
-        player.y == arenaY &&
-        player.direction !== "W") ||
+      (player.x == arenaX && player.y == arenaY && player.direction !== "W") ||
       (player.y == arenaY && player.x == 0 && player.direction !== "N") ||
       (player.y == 0 && player.x == 0 && player.direction !== "E")
     ) {
       return "R";
     } else if (
       (player.y == 0 &&
-        ![0, arenaX].includes(player.x) &&
+        ![0, "0", arenaX].includes(player.x) &&
         player.direction !== "E") ||
       (player.x == 0 &&
-        ![0, arenaY].includes(player.y) &&
+        ![0, "0", arenaY].includes(player.y) &&
         player.direction !== "N") ||
       (player.x == arenaX &&
-        ![0, arenaY].includes(player.y) &&
+        ![0, "0", arenaY].includes(player.y) &&
         player.direction !== "S") ||
       (player.y == arenaY &&
-        ![0, arenaX].includes(player.x) &&
+        ![0, "0", arenaX].includes(player.x) &&
         player.direction !== "W")
     ) {
       return "R";
@@ -86,11 +84,8 @@ const requestProcess = (bodyRequest) => {
   //Shoot to other users
   const arenaX = bodyRequest.arena.dims[1];
   const arenaY = bodyRequest.arena.dims[3];
-  console.log(arenaX);
-  console.log(arenaY);
   if (Xmatch.length > 0) {
-    const onXTarget = user.y - Xmatch[0].y;
-    console.log(onXTarget);
+    const onXTarget = parseInt(user.y) - parseInt(Xmatch[0].y);
     if (
       (user.direction == "E" && onXTarget < 0) ||
       (user.direction == "W" && onXTarget > 0)
@@ -102,7 +97,7 @@ const requestProcess = (bodyRequest) => {
       return moveCharacterOptions(arenaX, arenaY, user);
     }
   } else if (Ymatch.length > 0) {
-    const onYTarget = user.x - Ymatch[0].x;
+    const onYTarget = parseInt(user.x) - parseInt(Ymatch[0].x);
 
     if (
       (user.direction == "N" && onYTarget > 0) ||
