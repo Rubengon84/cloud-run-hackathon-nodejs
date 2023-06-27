@@ -82,8 +82,8 @@ const requestProcess = (bodyRequest) => {
   /******************************************************************************/
   //Start the action of the player
   //Shoot to other users
-  const arenaX = bodyRequest.arena.dims[1];
-  const arenaY = bodyRequest.arena.dims[3];
+  const arenaX = bodyRequest.arena.dims[0];
+  const arenaY = bodyRequest.arena.dims[1];
   console.log(bodyRequest.arena.dims)
   console.log(arenaX);
   console.log(arenaY);
