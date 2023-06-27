@@ -84,9 +84,6 @@ const requestProcess = (bodyRequest) => {
   //Shoot to other users
   const arenaX = bodyRequest.arena.dims[0];
   const arenaY = bodyRequest.arena.dims[1];
-  console.log(bodyRequest.arena.dims)
-  console.log(arenaX);
-  console.log(arenaY);
   if (Xmatch.length > 0) {
     const onXTarget = parseInt(user.y) - parseInt(Xmatch[0].y);
     console.log(onXTarget);
