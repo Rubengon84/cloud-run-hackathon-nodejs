@@ -84,8 +84,11 @@ const requestProcess = (bodyRequest) => {
   //Shoot to other users
   const arenaX = bodyRequest.arena.dims[1];
   const arenaY = bodyRequest.arena.dims[3];
+  console.log(arenaX);
+  console.log(arenaY);
   if (Xmatch.length > 0) {
     const onXTarget = parseInt(user.y) - parseInt(Xmatch[0].y);
+    console.log(onXTarget);
     if (
       (user.direction == "E" && onXTarget < 0) ||
       (user.direction == "W" && onXTarget > 0)
