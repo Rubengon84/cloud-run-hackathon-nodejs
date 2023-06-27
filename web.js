@@ -19,8 +19,13 @@ app.listen(process.env.PORT || 8080);
 const requestProcess = (bodyRequest) => {
   /*********************************************/
   //get Xmatch and Ymatch targets
-  const user = bodyRequest.arena.state["https://A_PLAYERS_URL"];
-  delete bodyRequest.arena.state["https://A_PLAYERS_URL"];
+  const user =
+    bodyRequest.arena.state[
+      "https://cloud-run-hackathon-nodejs-n6ncw5mplq-uc.a.run.app"
+    ];
+  delete bodyRequest.arena.state[
+    "https://cloud-run-hackathon-nodejs-n6ncw5mplq-uc.a.run.app"
+  ];
   let arenaArray = Object.values(bodyRequest.arena.state);
   let { Xmatch, Ymatch, nonMatching } = arenaArray.reduce(
     (acc, userRecord) => {
