@@ -1,27 +1,31 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-const bodyParser = require('body-parser');
+const bodyParser = require("body-parser");
 
 app.use(bodyParser.json());
 
-app.get('/', function (req, res) {
-  res.send('Let the battle begin!');
+app.get("/", function (req, res) {
+  res.send("Let the battle begin!");
 });
 
-app.post('/', function (req, res) {  
+app.post("/", function (req, res) {
   // TODO add your implementation here to replace the random response
-  
+
   res.send(requestProcess(req.body));
 });
 
 app.listen(process.env.PORT || 8080);
 
-
 const requestProcess = (bodyRequest) => {
   /*********************************************/
   //get Xmatch and Ymatch targets
-  const user = bodyRequest.arena.state["https://A_PLAYERS_URL"];
-  delete bodyRequest.arena.state["https://A_PLAYERS_URL"];
+  const user =
+    bodyRequest.arena.state[
+      "https://cloud-run-hackathon-nodejs-n6ncw5mplq-uc.a.run.app"
+    ];
+  delete bodyRequest.arena.state[
+    "https://cloud-run-hackathon-nodejs-n6ncw5mplq-uc.a.run.app"
+  ];
   let arenaArray = Object.values(bodyRequest.arena.state);
   let { Xmatch, Ymatch, nonMatching } = arenaArray.reduce(
     (acc, userRecord) => {
@@ -44,50 +48,6 @@ const requestProcess = (bodyRequest) => {
   Ymatch.sort((a, b) => {
     return Math.abs(a.x - user.x) - Math.abs(b.x - user.x);
   });
-
-  //**************************************************************/
-
-  // const dodgeOrAttackX = (ourCharacter, enemy) => {
-  //   if (enemy.y - ourCharacter.y > 0) {
-  //     if (enemy.direction === "N" && ourCharacter.direction !== "S") {
-  //       if (["E", "W"].includes(ourCharacter.direction)) return "F";
-  //       else return "R";
-  //       // } else if (enemy.direction !== "N" && ourCharacter.direction === "S")
-  //       //   return "T";
-  //     } else if (enemy.direction !== "N" && ourCharacter.direction !== "S")
-  //       return "R";
-  //   } else if (enemy.y - ourCharacter.y < 0) {
-  //     if (enemy.direction === "S" && ourCharacter.direction !== "N") {
-  //       if (["E", "W"].includes(ourCharacter.direction)) return "F";
-  //       else return "L";
-  //       // } else if (enemy.direction !== "S" && ourCharacter.direction === "N")
-  //       //   return "T";
-  //     } else if (enemy.direction !== "S" && ourCharacter.direction !== "N")
-  //       return "L";
-  //   }
-  //   return "T";
-  // };
-
-  // const dodgeOrAttackY = (ourCharacter, enemy) => {
-  //   if (enemy.x - ourCharacter.x > 0) {
-  //     if (enemy.direction === "W" && ourCharacter.direction !== "E") {
-  //       if (["N", "S"].includes(ourCharacter.direction)) return "F";
-  //       else return "R";
-  //       // } else if (enemy.direction !== "W" && ourCharacter.direction === "E")
-  //       //   return "T";
-  //     } else if (enemy.direction !== "W" && ourCharacter.direction !== "E")
-  //       return "R";
-  //   } else if (enemy.y - ourCharacter.y < 0) {
-  //     if (enemy.direction === "E" && ourCharacter.direction !== "W") {
-  //       if (["N", "S"].includes(ourCharacter.direction)) return "F";
-  //       else return "L";
-  //       // } else if (enemy.direction !== "E" && ourCharacter.direction === "W")
-  //       //   return "T";
-  //     } else if (enemy.direction !== "E" && ourCharacter.direction !== "W")
-  //       return "L";
-  //   }
-  //   return "T";
-  // };
 
   /***************************************************/
   // Funtion to return the posible movements Array when the player in in the edge of the Arena
@@ -132,6 +92,8 @@ const requestProcess = (bodyRequest) => {
       (user.direction === "W" && onXTarget > 0)
     ) {
       return "T";
+    } else if (["N", "S"].includes(user.direction)) {
+      return "R";
     } else {
       return moveCharacterOptions(arenaX, arenaY, user);
     }
@@ -143,6 +105,8 @@ const requestProcess = (bodyRequest) => {
       (user.direction === "S" && onYTarget < 0)
     ) {
       return "T";
+    } else if (["W", "E"].includes(user.direction)) {
+      return "R";
     } else {
       return moveCharacterOptions(arenaX, arenaY, user);
     }
@@ -153,11 +117,3 @@ const requestProcess = (bodyRequest) => {
     return moveCharacterOptions(arenaX, arenaY, user);
   }
 };
-
-let bodyRequest = {
-  arena: arena,
-};
-let result = requestProcess(bodyRequest);
-console.timeEnd("dbsave");
-
-console.log(result);
