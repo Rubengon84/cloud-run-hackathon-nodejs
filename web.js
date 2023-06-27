@@ -84,6 +84,7 @@ const requestProcess = (bodyRequest) => {
   //Shoot to other users
   const arenaX = bodyRequest.arena.dims[1];
   const arenaY = bodyRequest.arena.dims[3];
+  console.log(bodyRequest.arena.dims)
   console.log(arenaX);
   console.log(arenaY);
   if (Xmatch.length > 0) {
