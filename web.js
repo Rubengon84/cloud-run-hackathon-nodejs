@@ -86,7 +86,6 @@ const requestProcess = (bodyRequest) => {
   const arenaY = bodyRequest.arena.dims[1];
   if (Xmatch.length > 0) {
     const onXTarget = parseInt(user.y) - parseInt(Xmatch[0].y);
-    console.log(onXTarget);
     if (
       (user.direction == "E" && onXTarget < 0) ||
       (user.direction == "W" && onXTarget > 0)
