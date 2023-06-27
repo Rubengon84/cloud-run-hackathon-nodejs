@@ -19,13 +19,8 @@ app.listen(process.env.PORT || 8080);
 const requestProcess = (bodyRequest) => {
   /*********************************************/
   //get Xmatch and Ymatch targets
-  const user =
-    bodyRequest.arena.state[
-      "https://cloud-run-hackathon-nodejs-n6ncw5mplq-uc.a.run.app"
-    ];
-  delete bodyRequest.arena.state[
-    "https://cloud-run-hackathon-nodejs-n6ncw5mplq-uc.a.run.app"
-  ];
+  const user = bodyRequest.arena.state["https://A_PLAYERS_URL"];
+  delete bodyRequest.arena.state["https://A_PLAYERS_URL"];
   let arenaArray = Object.values(bodyRequest.arena.state);
   let { Xmatch, Ymatch, nonMatching } = arenaArray.reduce(
     (acc, userRecord) => {
@@ -84,7 +79,9 @@ const requestProcess = (bodyRequest) => {
   /******************************************************************************/
   //Start the action of the player
   //Shoot to other users
-  const [arenaX, arenaY] = bodyRequest.arena.dims;
+  const arenaX = bodyRequest.arena.dims[0];
+  const arenaY = bodyRequest.arena.dims[1];
+
   if (Xmatch.length > 0) {
     const onXTarget = user.y - Xmatch[0].y;
     if (
